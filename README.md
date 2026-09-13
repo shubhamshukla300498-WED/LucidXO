@@ -24,9 +24,7 @@ pnpm build
 
 The build produces a self-contained `docs/index.html` for GitHub Pages. Configure Pages to deploy the `main` branch's `/docs` directory. Rebuild and commit that file after source changes. The rendered application can also be opened locally with `pnpm preview`.
 
-The first world includes recursive 3D anatomy, an implicit raymarched core, three material palettes, seeded regeneration, real geometry-detail controls, local image influence, microphone/tab/file audio, a synthesized demo, native 4K mode, frame capture, focus/fullscreen, and visible performance statistics. Microphone and tab capture depend on browser permissions and supported audio-sharing surfaces.
-
-This is a first playable milestone. Ten-world diversity, volumes, feedback, and the full release-quality/thermal test matrix remain future work. Read [validation evidence and limits](docs/VALIDATION.md) and the [architecture](docs/ARCHITECTURE.md).
+Three worlds—Living Vault, Gyroid Reef, and Crystal Lattice—provide distinct implicit geometry, separate bass/mid/high responses, image influence, and native 4K controls. Choose a world manually or enable Journey for onset-guided automatic five-second morphs. The UI is retained. Full phrase recognition, further engines, and release-quality profiling remain future work. Read [validation evidence and limits](docs/VALIDATION.md) and the [architecture](docs/ARCHITECTURE.md).
 
 ## Start here
 

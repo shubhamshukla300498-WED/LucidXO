@@ -1,30 +1,16 @@
 # Status
 
-Updated 2026-09-13.
+Updated 2026-09-13. Primary workspace: this repository.
+Live URL: https://shubhamshukla300498-wed.github.io/LucidXO/
 
 ## Current milestone
 
-First playable milestone: a fresh application implements the initial input/render foundation and the Alien Organism candidate. Primary repository: https://github.com/shubhamshukla300498-WED/LucidXO (public).
+Revision 2 replaces the detached mesh sculpture with three immersive raymarched worlds (Living Vault, Gyroid Reef, Crystal Lattice), guided by the user's tunnel and folded-organism references. The existing UI is retained. Bass aperture movement, onset waves, midrange deformation, high-frequency veins, and energy-driven travel replace the former subtle response. Quiet-band normalization and bass onset detection were strengthened.
 
-Live visualizer: https://shubhamshukla300498-wed.github.io/LucidXO/
+## Evidence
 
-## Accepted state
+Type check, production build, and fifteen automated checks pass. Built-in audio produces changing bass/onset values in the rendered diagnostics. Native 3840×2160 is supported but the new full-screen shader is more expensive than revision 1; use the current validation report, not the old sculpture's FPS. Original handover/reference files remain unchanged.
 
-- Original uploaded HANDOVER.md preserved byte for byte in `reference/HANDOVER.original.md` and at the beginning of root HANDOVER.md.
-- React/TypeScript/Three.js/GLSL/Vite/Zustand/Web Audio stack retained. Recursive mesh anatomy and a raymarched core render in one depth-aware scene.
-- Local audio files, built-in demo, microphone/tab capture handlers, cancellation/error handling, and image-driven materials are implemented.
-- Seeded variations, actual geometry detail, three material palettes, quality/aspect controls, fullscreen/focus, PNG capture, and visible frame statistics are included.
-- Type check, production build, nine automated tests, and handover preservation checks pass. Browser audio-file/image/demo checks pass; see docs/VALIDATION.md for evidence and limits.
-- `pnpm build` packages docs/index.html for branch-based GitHub Pages. Source changes must rebuild and commit that artifact.
+## Next
 
-## Constraints and evidence
-
-The previous application ZIP was absent, so this is a fresh scaffold. Native 3840×2160 was observed on Apple M1 Pro; the recent sample reached 69 FPS after removing unnecessary frame-buffer preservation. This is not universal 4K60 certification. Live microphone/tab permission tests, the full thermal/resource soak, and the complete premium art gate remain open. The connector rejects writes; publication uses the authenticated GitHub browser session.
-
-## Publication verification
-
-GitHub Pages is live from main/docs. The hosted HTML matches the tested 794,184-byte build exactly (SHA-256 d772ee8613d39735bd5041780dd408c0782a552909062eaed35b5cbb5be25d7e). All 31 repository files matched local bytes before this status update. Hosted rendering, focus mode, native 3840×2160, and the built-in audio demo were checked with no captured console errors. PNG export was invoked, but the browser automation did not observe a download event; saved-file verification remains open.
-
-## Next action
-
-Review the playable flagship with the user, refine anatomy/material/audio mapping, and finish sustained performance/permission testing before multiplying visual engines. Keep future work in this repository, commit completed changes, and verify remote synchronization.
+Review all three worlds with the user's music. Five-second morphs and onset-guided Journey sequencing are implemented; true phrase recognition and further visual engines remain future work. Manual microphone/tab permissions, sustained thermal tests, and saved PNG verification remain open. Commit and synchronize completed changes; rebuild docs/index.html whenever source changes.
