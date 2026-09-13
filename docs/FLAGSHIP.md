@@ -1,15 +1,23 @@
-# Fractal Alien Organism — design card
+# Revision 2 — three living mathematical worlds
 
-The first organism is a hollow radial anatomy: eight curling trunk forms, recursively branching fine structures, curved cavity ribs, and an implicit toroidal core. Deep plum metal, iridescent highlights, and warm inner ridges separate the body from a near-black environment.
+The user approved the UI but rejected the detached sculpture, subtle music response, and single preset. Their references guide organic folds, repeating perspective, dark cavities, luminous surfaces, and evolving mathematical structure. Reference images remain local and are not bundled or published.
 
-- **Macro:** bounded body breathing and energy-dependent expansion.
-- **Meso:** independent phase offsets per arm, slow depth motion, and mid-band articulation.
-- **Micro/light:** high-band vein emission and flux-driven surface roughness; no promise of full microgeometry simulation.
-- **Core:** moving wave structure within a bounded raymarch proxy, with depth written into the same scene as the meshes.
-- **Camera:** restrained viewing-angle variation; drag/zoom exploration pauses automatic motion briefly. Focus mode removes controls.
-- **Image role:** UV surface color on mesh anatomy and projected local color on the implicit core. Influence blends back to the base material at zero. This is image-driven material modulation, not image-to-3D reconstruction.
-- **Detail:** branching count, recursion tier, longitudinal and radial tessellation. Regeneration is debounced and deterministic.
-- **Variation:** changes seed and branch curvature, not the identity of the world. The three palette choices are explicitly material palettes, not separate presets.
-- **Known limits:** synchronous topology generation can cause a brief pause at high detail; color rendering is approximate and artist-directed; no full volumetric scattering, feedback, or source separation yet.
+## World identities
 
-Visual acceptance for this milestone: hollow recognizable silhouette, real camera parallax, readable body without bloom, visible image influence, and multiple independent audio mappings. Full premium-quality and sustained-performance gates in the handover remain the release standard.
+- **Living Vault:** a corrugated organic tunnel with repeating ribs and seed-dependent six/eight/ten-fold symmetry. Bass opens the aperture and thickens ribs; mids twist the vault; highs deform small folds and illuminate veins.
+- **Gyroid Reef:** a periodic gyroid surface with interconnected pores. Bass changes spatial frequency and sheet thickness; mids rotate its coordinate field; highs light fine surface patterns.
+- **Crystal Lattice:** repeating octahedral shells and rotating toroidal rings. Bass expands the crystals, mids rotate rings and twist the lattice, highs change shell thickness and detail illumination.
+
+These are three distinct implicit constructions with shared traversal, lighting, and materials. They are not three independent renderer implementations or ten completed presets. All retain an open camera passage so nearby surfaces do not continually obscure the composition.
+
+## Musical behavior
+
+Four normalized frequency bands, energy, flux, centroid and onset are extracted. Quieter audible bands receive adaptive normalization with a silence floor. A bass-rise detector supplements spectral flux so narrow bass transients are not lost in the average spectrum. The default reactivity increased from 0.65 to 0.9.
+
+Bass now changes the vault radius by up to 1.1 world units times reactivity (about 42% of its base aperture at default controls), versus less than 1% scale modulation in the former mesh scene. Bass and onset drive traveling bands; mids deform structures; highs control fine patterns; overall energy changes travel speed. Silence preserves slow autonomous evolution. Pause freezes visual audio state, time, and transitions.
+
+## Journey
+
+Manual selection holds the chosen world and morphs over five seconds. Automatic Journey advances cyclically after at least 16 seconds and 16 detected onset edges, with a 32-second fallback while audible energy is present. Transitions interpolate the implicit fields with smooth easing. This is onset-guided sequencing, not BPM/beat-grid or musical-phrase recognition. Rapid manual changes are queued until the current morph completes.
+
+Next art review: use the user's own music, refine timing/contrast/material variety, then expand toward the translucent anatomical and ornate alien reference directions. This iteration is not a claim that the full premium reference-quality gate has passed.

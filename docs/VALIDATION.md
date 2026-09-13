@@ -1,36 +1,25 @@
-# First playable milestone — validation
+# Validation — revision 2
 
-Tested 2026-09-13. This records actual checks and remaining limits, not a declaration that every handover release gate is complete.
+Tested 2026-09-13 in the Codex in-app browser on ANGLE Metal / Apple M1 Pro. Exact browser version, power mode, and isolated GPU pass timings were not captured. These are observed samples, not release certification.
 
-## Build and specification
+## Automated checks
 
-- TypeScript strict type check passed.
-- `pnpm build` passed with pinned dependencies; production output is a single HTML file with JavaScript and CSS included.
-- Production preview SHA-256: `d772ee8613d39735bd5041780dd408c0782a552909062eaed35b5cbb5be25d7e`.
-- Original handover SHA-256, preserved byte prefix, and synchronized research appendix checks passed.
-- Nine automated tests passed: refresh-rate-independent smoothing, sample-rate-aware frequency bands, silence normalization, bounded impulse/decay, exact native resolution, deterministic seeds, missing capture audio, late capture cancellation, and permission denial.
+Strict TypeScript check, Vite production build, and all **15 tests pass**. Coverage includes audio capture cancellation/permission errors, sample-rate handling, silent input, frame-independent envelopes, quiet bass onset, high/bass isolation, exact native resolution, seed repeatability, manual five-second morphs, pause/silence behavior, and Journey dwell/onset/fallback timing.
 
-## Browser interactions
+## Browser checks
 
-- Renderer initialized without shader errors in the Codex in-app browser using ANGLE Metal / Apple M1 Pro.
-- Desktop 1440×900 layout and 390×844 mobile layout inspected. Mobile controls expand and the document width stays within the viewport. The bottom controls were adjusted to fit four actions without wrapping the last item.
-- Built-in sound connected and generated live features.
-- A generated local WAV played; pause and disconnect updated source state correctly.
-- A generated PNG appeared in the image panel and visibly changed surface/core color. Removal restored the base material.
-- Keyboard slider interaction changes the underlying value; Glow was checked at its maximum. Browser automation's direct range fill did not trigger React updates, so keyboard input was used for reliable control testing.
-- Native 4K selected an actual 3840×2160 drawing buffer, with no device-pixel-ratio multiplication.
+- All three worlds selected and visually inspected: vault, porous gyroid, and faceted crystal/ring lattice have different surface construction.
+- Built-in 100 BPM audio starts. Render details showed bass/onset values changing (example bass 0.83, onset 0.82) independently of mids/highs. This bass-heavy demo is not a broad-spectrum music acceptance test.
+- Automatic Journey changed the selected world while demo audio ran; manual selection disables Journey and holds the selected world.
+- A local pulse.wav played and disconnected. A local surface.png uploaded and connected to the material input.
+- Native 16:9 main canvas measured **3840×2160**. With Journey/demo running, a recent sample showed **23 FPS**, mean interval **43.0 ms**, and session P95 **108.4 ms** including transitions/startup. A later gyroid sample showed **26–28 FPS**. Balanced 1440×900 samples reached 60–120 FPS depending on the world and transition state.
+- Renderer reported 2 geometries, 14 textures, 15 draws including postprocessing. Shader ray work is not represented by its low triangle count.
+- No captured browser console errors in the tested revision.
 
-## Performance observation
+## Limits
 
-Native 4K, 16:9, seed 7319, detail 70%, Iridescent palette, glow 35%, no audio or image input. Device: Apple M1 Pro through ANGLE Metal in the Codex in-app browser. Hardware identification is the renderer's reported value; exact browser version, power mode, and GPU-only timings were not independently captured.
+The new full-screen distance fields cost more than the old sculpture. Its previous 69 FPS 4K result does not apply. This revision does not meet a 4K60 target on the tested M1 Pro. Native 4K remains explicit without hidden upscaling. Morphs evaluate two fields; optimization and sustained thermal tests remain necessary.
 
-The final implementation removes persistent drawing-buffer preservation and renders an explicit frame when saving PNGs. Earlier measurements with preservation enabled were approximately 29–30 FPS. After removal, an observed sample reported 69 FPS, 14.5 ms mean recent frame interval, and 17.5 ms p95 since quality selection at 3840×2160. The scene reported 383,150 triangles per frame, 32 draw calls, and 19 geometries / 15 textures.
+Morphing is smooth field interpolation, not a mathematically guaranteed topology-preserving deformation. Camera passages keep near surfaces out of the eye but may expose cut edges. Thin/distant surfaces can alias. Lighting is approximate; volumetric transport and artistic feedback are not implemented.
 
-These are requestAnimationFrame interval statistics, including browser scheduling. The statistics are not isolated GPU pass times. No claim of universal 4K60 is made.
-
-## Remaining release validation
-
-- Actual microphone recording and browser-tab permission/OS audio-sharing flows need user-driven testing on target browsers. Denial, no-audio, and cancellation lifecycle paths are covered with mocks, not falsely reported as live capture success.
-- Full ten-minute thermal soak, the handover's 50-preset-switch/20-source-replacement matrix, and broad browser/GPU compatibility remain uncompleted.
-- There is currently one world. Material palette choices are not presented as distinct visual engines.
-- Visual quality remains a first playable candidate. Further flagship art direction, volumetrics, feedback, and the remaining worlds are future milestones.
+Actual microphone/tab permission flows, saved-PNG verification, long resource soak, and user-track perceptual testing remain open. Journey detects onset edges and active-energy dwell, not BPM grids or musical phrases. The three worlds share material systems; further art direction and palette differentiation remain useful.
