@@ -6,17 +6,18 @@ export function bandPower(spectrum:Float32Array,sampleRate:number,fftSize:number
   if(b<=a)return 0;let sum=0;for(let i=a;i<b;i++)sum+=10**(spectrum[i]/10);return Math.sqrt(sum/(b-a));
 }
 export class FeatureAnalyzer {
-  features=emptyFeatures();private previous=new Float32Array(1024);private peak=new Float32Array(4).fill(.035);private fluxFloor=.015;private cooldown=0;
+  features=emptyFeatures();private previous=new Float32Array(1024);private peak=new Float32Array(4).fill(.003);private fluxFloor=.015;private cooldown=0;private previousBass=0;
   update(spectrum:Float32Array,wave:Float32Array,sampleRate:number,dt:number){
     dt=Math.min(.1,Math.max(0,dt));let square=0;for(const x of wave)square+=x*x;const rms=Math.sqrt(square/wave.length);
     const bands=[[20,150],[150,600],[600,2500],[2500,sampleRate/2]];const names=['bass','lowMid','mid','high'] as const;
-    for(let n=0;n<4;n++){const p=bandPower(spectrum,sampleRate,spectrum.length*2,...bands[n] as [number,number]);this.peak[n]=Math.max(.035,p,this.peak[n]*Math.exp(-dt/6));this.features[names[n]]=smooth(this.features[names[n]],rms<.002?0:Math.min(1,p/this.peak[n]),dt);}
+    for(let n=0;n<4;n++){const p=bandPower(spectrum,sampleRate,spectrum.length*2,...bands[n] as [number,number]);this.peak[n]=Math.max(.003,p,this.peak[n]*Math.exp(-dt/6));this.features[names[n]]=smooth(this.features[names[n]],rms<.002?0:Math.min(1,Math.sqrt(p/this.peak[n])),dt);}
     if(this.previous.length!==spectrum.length)this.previous=new Float32Array(spectrum.length);
     let flux=0,weight=0,centroid=0;
     for(let i=0;i<spectrum.length;i++){const p=10**(spectrum[i]/20);flux+=Math.max(0,p-this.previous[i]);this.previous[i]=p;weight+=p;centroid+=i*p;}
     flux/=spectrum.length;this.cooldown-=dt;
     this.features.onset*=Math.exp(-dt/.25);
-    if(rms>.003&&flux>Math.max(.001,this.fluxFloor*1.65)&&this.cooldown<=0){this.features.onset=1;this.cooldown=.17;}
+    const bassRise=this.features.bass-this.previousBass;this.previousBass=this.features.bass;
+    if(rms>.003&&(flux>Math.max(.0001,this.fluxFloor*1.65)||bassRise>.09)&&this.cooldown<=0){this.features.onset=1;this.cooldown=.17;}
     this.fluxFloor=smooth(this.fluxFloor,flux,dt,.15,1.5);
     this.features.energy=smooth(this.features.energy,Math.min(1,rms*4),dt);
     this.features.flux=smooth(this.features.flux,Math.min(1,flux*160),dt);
