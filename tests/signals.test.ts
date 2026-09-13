@@ -19,4 +19,7 @@ test('a bass impulse has a bounded independent response and decays',()=>{
 test('native 4K is not multiplied by device pixel ratio',()=>{
  assert.deepEqual(resolution(1600,900,'Native 4K',2),[3840,2160]);assert.deepEqual(resolution(900,1600,'Native 4K',3),[2160,3840]);assert.deepEqual(resolution(2160,2160,'Native 4K',2),[2160,2160]);assert.deepEqual(resolution(1600,900,'Performance',2),[1280,720]);assert.deepEqual(resolution(1600,900,'Balanced',2),[1920,1080]);
 });
-test('seeded anatomical generation is reproducible and changes with seed',()=>{const a=seeded(7319),b=seeded(7319),c=seeded(100);for(let i=0;i<30;i++){const x=a();assert.equal(x,b());assert.ok(x>=0&&x<1);assert.notEqual(x,c());}});
+test('seed sequence is reproducible and changes with seed',()=>{const a=seeded(7319),b=seeded(7319),c=seeded(100);for(let i=0;i<30;i++){const x=a();assert.equal(x,b());assert.ok(x>=0&&x<1);assert.notEqual(x,c());}});
+
+test('quiet audible bass produces a visible normalized response and an onset',()=>{const a=new FeatureAnalyzer(),bins=new Float32Array(1024).fill(-100),wave=new Float32Array(2048).fill(.01);bins[4]=-40;const f=a.update(bins,wave,48000,1/60);assert.ok(f.bass>.15);assert.equal(f.onset,1);assert.ok(f.high<.05);});
+test('high-frequency input stays distinct from bass',()=>{const a=new FeatureAnalyzer(),bins=new Float32Array(1024).fill(-Infinity),wave=new Float32Array(2048).fill(.05);bins.fill(-35,150,350);for(let i=0;i<30;i++)a.update(bins,wave,48000,1/60);assert.ok(a.features.high>.5);assert.equal(a.features.bass,0);});
