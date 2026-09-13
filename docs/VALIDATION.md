@@ -23,3 +23,7 @@ The new full-screen distance fields cost more than the old sculpture. Its previo
 Morphing is smooth field interpolation, not a mathematically guaranteed topology-preserving deformation. Camera passages keep near surfaces out of the eye but may expose cut edges. Thin/distant surfaces can alias. Lighting is approximate; volumetric transport and artistic feedback are not implemented.
 
 Actual microphone/tab permission flows, saved-PNG verification, long resource soak, and user-track perceptual testing remain open. Journey detects onset edges and active-energy dwell, not BPM grids or musical phrases. The three worlds share material systems; further art direction and palette differentiation remain useful.
+
+## 2026-09-14 focused update
+
+Type check, production build and all 16 tests pass. Added isolated-band transient checks for low/mid/high pulses and rejection of repeated pulses from sustained tones. Browser inspection confirmed nested radial geometry/filigree, default orbit off, functioning demo input, and no captured console errors. The earlier timing samples above belong to the previous shader; this pass is not a fresh 4K performance certification.
