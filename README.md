@@ -4,6 +4,8 @@ A premium real-time generative audiovisual instrument: alien anatomy, recursive 
 
 **Status:** first playable organism implemented. The primary repository is [shubhamshukla300498-WED/LucidXO](https://github.com/shubhamshukla300498-WED/LucidXO).
 
+**[Open the live visualizer](https://shubhamshukla300498-wed.github.io/LucidXO/)** — choose Connect audio → Try the built-in sound.
+
 ## Run the instrument
 
 Use Node.js 22.12 or newer and pnpm 11.19.0.

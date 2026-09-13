@@ -6,6 +6,8 @@ Updated 2026-09-13.
 
 First playable milestone: a fresh application implements the initial input/render foundation and the Alien Organism candidate. Primary repository: https://github.com/shubhamshukla300498-WED/LucidXO (public).
 
+Live visualizer: https://shubhamshukla300498-wed.github.io/LucidXO/
+
 ## Accepted state
 
 - Original uploaded HANDOVER.md preserved byte for byte in `reference/HANDOVER.original.md` and at the beginning of root HANDOVER.md.
@@ -18,6 +20,10 @@ First playable milestone: a fresh application implements the initial input/rende
 ## Constraints and evidence
 
 The previous application ZIP was absent, so this is a fresh scaffold. Native 3840×2160 was observed on Apple M1 Pro; the recent sample reached 69 FPS after removing unnecessary frame-buffer preservation. This is not universal 4K60 certification. Live microphone/tab permission tests, the full thermal/resource soak, and the complete premium art gate remain open. The connector rejects writes; publication uses the authenticated GitHub browser session.
+
+## Publication verification
+
+GitHub Pages is live from main/docs. The hosted HTML matches the tested 794,184-byte build exactly (SHA-256 d772ee8613d39735bd5041780dd408c0782a552909062eaed35b5cbb5be25d7e). All 31 repository files matched local bytes before this status update. Hosted rendering, focus mode, native 3840×2160, and the built-in audio demo were checked with no captured console errors. PNG export was invoked, but the browser automation did not observe a download event; saved-file verification remains open.
 
 ## Next action
 
