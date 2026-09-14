@@ -24,7 +24,9 @@ pnpm build
 
 The build produces a self-contained `docs/index.html` for GitHub Pages. Configure Pages to deploy the `main` branch's `/docs` directory. Rebuild and commit that file after source changes. The rendered application can also be opened locally with `pnpm preview`.
 
-Three worlds—Living Vault, Gyroid Reef, and Crystal Lattice—provide distinct implicit geometry, separate bass/mid/high responses, image influence, and native 4K controls. Choose a world manually or enable Journey for onset-guided automatic five-second morphs. The UI is retained. Full phrase recognition, further engines, and release-quality profiling remain future work. Read [validation evidence and limits](docs/VALIDATION.md) and the [architecture](docs/ARCHITECTURE.md).
+Eight worlds offer distinct procedural geometry. Five new presets draw from the latest references: **Emerald Spirals, Solar Mandala, Silk Weave, Mirror Sanctum, and Alien Seraph**. Living Vault, Gyroid Reef, and Crystal Lattice remain available. Journey starts enabled and holds each world for 6–10 seconds of audible activity before a two-second morph. Beat events continuously advance ornament phases between switches. Manual selection holds a world until Journey is re-enabled.
+
+Bass transients open structures, midrange transients launch traveling accents, and treble transients light fine details. These are frequency-band proxies, not instrument recognition. Image influence and native 4K controls remain available. Read [validation evidence and limits](docs/VALIDATION.md) and the [architecture](docs/ARCHITECTURE.md).
 
 ## Start here
 
