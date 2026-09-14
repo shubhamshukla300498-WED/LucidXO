@@ -27,3 +27,9 @@ Actual microphone/tab permission flows, saved-PNG verification, long resource so
 ## 2026-09-14 focused update
 
 Type check, production build and all 16 tests pass. Added isolated-band transient checks for low/mid/high pulses and rejection of repeated pulses from sustained tones. Browser inspection confirmed nested radial geometry/filigree, default orbit off, functioning demo input, and no captured console errors. The earlier timing samples above belong to the previous shader; this pass is not a fresh 4K performance certification.
+
+## 2026-09-14 five-preset update
+
+Strict type check and production build pass; 17 automated checks pass, including updated two-second transition timing, 6-second/four-onset eligibility, 10-second fallback, manual selection, pause and silence. Five new presets were selected and visually inspected at 1280×720: coils/webs, nested petals, woven sheets, rectangular portals, and a frontal mask. They are generated geometry; no supplied reference bitmap is embedded. Browser demo playback and automatic world changes were checked. No fresh native-4K timing or real user-track acceptance test was performed for this update.
+
+The mask follows ahead of the traveling camera to keep its face visible. Thin coils/sheets can show aliasing. The mirror world is a repeating checkerboard corridor, not a ray-traced mirror. Continuous beat-driven phase changes supplement the world transitions; these are onset/energy rules, not beat-grid or phrase recognition. Existing performance samples above describe earlier builds only.
