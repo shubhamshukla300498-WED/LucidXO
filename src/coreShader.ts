@@ -3,7 +3,7 @@ export const fragment=`
 precision highp float;
 varying vec2 vUv;
 uniform float uTime,uBass,uMid,uHigh,uOnset,uEnergy,uGlow,uImageMix,uAspect,uDetail,uSeed,uZoom,uFrom,uTo,uBlend,uPattern,uKick,uKickAge;
-uniform vec3 uColor;
+uniform vec3 uColor,uFlight;
 uniform sampler2D uImage;
 uniform mat4 uCamera;
 mat2 rot(float a){return mat2(cos(a),-sin(a),sin(a),cos(a));}
@@ -68,7 +68,7 @@ float referenceWorld(vec3 p,float which){
   return min(frame,boxSdf(pillar,vec3(.12,3.3,.18)));
  }
  // Repeated frontal masks: brow, nose, inset eyes, and radiating feather-like ornaments.
- vec3 q=p;q.z=p.z+uTime*.65+5.;q.xy=rot(.055*sin(phase))*q.xy/(1.+uBass*.12);
+ vec3 q=p;q.z=p.z-uFlight.z+5.;q.xy=rot(.055*sin(phase))*q.xy/(1.+uBass*.12);
  float head=ellipsoid(q,vec3(1.35,1.8,.42));
  float eyes=min(ellipsoid(q-vec3(.55,.35,.38),vec3(.32,.16,.25)),ellipsoid(q-vec3(-.55,.35,.38),vec3(.32,.16,.25)));
  head=max(head,-eyes);
@@ -86,11 +86,11 @@ float referenceWorld(vec3 p,float which){
 float shape(vec3 p,float which){
  // Slow, continuous harmonic warping changes each tunnel without stepping symmetry counts.
  if(which<6.5){
-  float z=p.z+uTime*.65;
+  float z=p.z-uFlight.z;
   float morph=.5+.5*sin(uPattern*.37+uSeed*.013);
   float angle=atan(p.y,p.x);
   p.xy=rot(.12*sin(z*.35+uPattern*.24))*p.xy;
-  p.xy*=1.+.075*sin(angle*5.+z*.7+uPattern*.31)*morph+.045*sin(angle*9.-z*.4+uPattern*.19);
+  p.xy*=1.+.12*sin(angle*5.+z*.7+uPattern*.65)*morph+.065*sin(angle*9.-z*.4+uPattern*.43);
  }
  if(which>2.5)return referenceWorld(p,which);
  if(which<.5)return vault(p);
@@ -118,13 +118,14 @@ float field(vec3 p){
  if(uBlend>.999)return shape(p,uTo);
  return mix(shape(p,uFrom),shape(p,uTo),uBlend);
 }
-vec3 normalAt(vec3 p){vec2 e=vec2(.003,0);return normalize(vec3(field(p+e.xyy)-field(p-e.xyy),field(p+e.yxy)-field(p-e.yxy),field(p+e.yyx)-field(p-e.yyx)));}
+// Four tetrahedral samples instead of six central-difference field evaluations.
+vec3 normalAt(vec3 p){vec2 e=vec2(1.,-1.)*.003;return normalize(e.xyy*field(p+e.xyy)+e.yyx*field(p+e.yyx)+e.yxy*field(p+e.yxy)+e.xxx*field(p+e.xxx));}
 void main(){
  vec2 uv=(vUv-.5)*2.;uv.x*=uAspect;
  vec3 direction=normalize(vec3(uv,-1.5*uZoom));
  vec3 rd=normalize(mat3(uCamera)*direction);
  // Orbit controls tilt the view; translation advances through the living structure.
- vec3 ro=vec3(.12*sin(uTime*.19),.10*cos(uTime*.17),-uTime*.65);
+ vec3 ro=uFlight;
  float t=.02;vec3 p=ro;float glow=0.;bool hit=false;
  for(int i=0;i<100;i++){
   if(float(i)>52.+uDetail*47.)break;
@@ -163,7 +164,7 @@ void main(){
   float diffuse=.25+.75*abs(dot(n,light));
   float rim=pow(1.-abs(dot(n,-rd)),2.);
   float spec=pow(max(0.,dot(reflect(rd,n),light)),24.);
-  vec3 tex=texture2D(uImage,vec2(a/6.28318+.5,p.z*.09+uTime*.03)).rgb;
+  vec3 tex=vec3(.5);if(uImageMix>.001)tex=texture2D(uImage,vec2(a/6.28318+.5,p.z*.09+uTime*.03)).rgb;
   base=mix(base,base*(.2+tex*1.8),uImageMix);
   col=base*(.035+diffuse*.12)+vec3(.5,.35,.65)*spec*.5;
   vec3 neon=mix(vec3(.65,1.,.04),vec3(.04,.8,1.),.5+.5*sin(p.z*.3));
@@ -173,7 +174,7 @@ void main(){
   col+=vec3(.8,.18,.65)*wave*uOnset*1.3;
   // A gold shock ring travels into depth on low-frequency attacks; bass itself shapes the aperture.
   float impact=exp(-pow((t-uKickAge*24.)*.65,2.))*exp(-uKickAge*2.);
-  col+=vec3(1.,.52,.08)*impact*uKick*2.6;
+  col+=mix(vec3(1.,.52,.08),vec3(.9,.12,.7),.5+.5*sin(a*6.+uPattern))*impact*uKick*3.6;
   if(mode>6.5){
    vec2 face=rot(.055*sin(uTime*.15+uPattern*.12))*p.xy/(1.+uBass*.12);
    float eye=length((vec2(abs(face.x)-.55,face.y-.35))/vec2(.29,.14));
