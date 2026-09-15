@@ -24,3 +24,20 @@ test('seed sequence is reproducible and changes with seed',()=>{const a=seeded(7
 test('quiet audible bass produces a visible normalized response and an onset',()=>{const a=new FeatureAnalyzer(),bins=new Float32Array(1024).fill(-100),wave=new Float32Array(2048).fill(.01);bins[4]=-40;const f=a.update(bins,wave,48000,1/60);assert.ok(f.bass>.15);assert.equal(f.onset,1);assert.ok(f.high<.05);});
 test('high-frequency input stays distinct from bass',()=>{const a=new FeatureAnalyzer(),bins=new Float32Array(1024).fill(-Infinity),wave=new Float32Array(2048).fill(.05);bins.fill(-35,150,350);for(let i=0;i<30;i++)a.update(bins,wave,48000,1/60);assert.ok(a.features.high>.5);assert.equal(a.features.bass,0);});
 test('isolated band transients trigger distinct visual pulses',()=>{for(const [bin,key] of [[4,'kick'],[50,'snare'],[300,'hat']] as const){const a=new FeatureAnalyzer(),bins=new Float32Array(1024).fill(-Infinity),wave=new Float32Array(2048).fill(.1);bins[bin]=-10;const f=a.update(bins,wave,48000,1/60);assert.equal(f[key],1);for(const other of ['kick','snare','hat'] as const)if(other!==key)assert.equal(f[other],0);for(let i=0;i<90;i++)a.update(bins,wave,48000,1/60);assert.ok(f[key]<.01,'sustained tone must not keep retriggering');}});
+
+
+test('kick attacks remain visible over a sustained bass bed at different refresh rates',()=>{
+ for(const hz of [30,60,120]){
+  const a=new FeatureAnalyzer(),bins=new Float32Array(1024).fill(-Infinity),wave=new Float32Array(2048).fill(.15);
+  bins[3]=-22;for(let i=0;i<hz;i++)a.update(bins,wave,48000,1/hz);
+  assert.ok(a.features.bass>.8);assert.ok(a.features.kick<.01);
+  let hits=0;
+  for(let beat=0;beat<4;beat++){
+   bins[4]=-9;const f=a.update(bins,wave,48000,1/hz);
+   if(f.kick>.9)hits++;
+   assert.equal(f.snare,0);assert.equal(f.hat,0);
+   bins[4]=-Infinity;for(let i=1;i<hz/2;i++)a.update(bins,wave,48000,1/hz);
+  }
+  assert.equal(hits,4,`all kicks detected at ${hz} Hz`);
+ }
+});
