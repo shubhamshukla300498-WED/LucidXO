@@ -26,7 +26,7 @@ The build produces a self-contained `docs/index.html` for GitHub Pages. Configur
 
 Eight worlds offer distinct procedural geometry. Five new presets draw from the latest references: **Emerald Spirals, Solar Mandala, Silk Weave, Mirror Sanctum, and Alien Seraph**. Living Vault, Gyroid Reef, and Crystal Lattice remain available. Journey starts enabled and holds each world for 6–10 seconds of audible activity before a two-second morph. Beat events continuously advance ornament phases between switches. Manual selection holds a world until Journey is re-enabled.
 
-Bass transients open structures, midrange transients launch traveling accents, and treble transients light fine details. These are frequency-band proxies, not instrument recognition. Image influence and native 4K controls remain available. Read [validation evidence and limits](docs/VALIDATION.md) and the [architecture](docs/ARCHITECTURE.md).
+Sustained bass slowly opens structures, kick attacks send gold accents into depth, midrange attacks launch magenta waves, and treble attacks light cyan details. Automatic camera drift starts enabled and follows slowly filtered music energy. Continuous harmonic deformation produces variations within each tunnel. These are frequency-band proxies, not instrument recognition. Image influence and native 4K controls remain available. Read [validation evidence and limits](docs/VALIDATION.md) and the [architecture](docs/ARCHITECTURE.md).
 
 ## Start here
 
