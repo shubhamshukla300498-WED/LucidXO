@@ -2,7 +2,7 @@ export const vertex=`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(positi
 export const fragment=`
 precision highp float;
 varying vec2 vUv;
-uniform float uTime,uBass,uMid,uHigh,uOnset,uEnergy,uGlow,uImageMix,uAspect,uDetail,uSeed,uZoom,uFrom,uTo,uBlend,uPattern;
+uniform float uTime,uBass,uMid,uHigh,uOnset,uEnergy,uGlow,uImageMix,uAspect,uDetail,uSeed,uZoom,uFrom,uTo,uBlend,uPattern,uKick,uKickAge;
 uniform vec3 uColor;
 uniform sampler2D uImage;
 uniform mat4 uCamera;
@@ -44,7 +44,7 @@ float referenceWorld(vec3 p,float which){
   return min(wire,max(abs(r-2.8)-.08,web-.017));
  }
  if(which<4.5){
-  float petals=cos(a*16.+.16*sin(p.z*.4));
+  float petals=mix(cos(a*12.),cos(a*16.),.5+.5*sin(uPattern*.25))+.16*sin(p.z*.4);
   float radius=2.2+.42*petals+.16*cos(a*32.)+uBass*.55;
   float z=mod(p.z+1.1,2.2)-1.1;
   float flower=length(vec2(r-radius,z*.8))-(.065+.03*sin(phase));
@@ -84,6 +84,14 @@ float referenceWorld(vec3 p,float which){
 }
 // Three independent surface constructions, sharing lighting and audio features.
 float shape(vec3 p,float which){
+ // Slow, continuous harmonic warping changes each tunnel without stepping symmetry counts.
+ if(which<6.5){
+  float z=p.z+uTime*.65;
+  float morph=.5+.5*sin(uPattern*.37+uSeed*.013);
+  float angle=atan(p.y,p.x);
+  p.xy=rot(.12*sin(z*.35+uPattern*.24))*p.xy;
+  p.xy*=1.+.075*sin(angle*5.+z*.7+uPattern*.31)*morph+.045*sin(angle*9.-z*.4+uPattern*.19);
+ }
  if(which>2.5)return referenceWorld(p,which);
  if(which<.5)return vault(p);
  vec3 q=p; q.xy=rot(uTime*.13+sin(q.z*.4)*uMid*.35)*q.xy;
@@ -162,9 +170,12 @@ void main(){
   col+=neon*(rim*.22+vein*.06);
   col+=mix(vec3(1.,.52,.12),themed,step(2.5,mode))*trace*.48+vec3(.25,.06,.65)*(1.-trace)*.07;
   col+=vec3(.25,.9,1.)*beads*uHigh*3.2;
-  col+=vec3(.8,.18,.65)*wave*uOnset*1.8;
+  col+=vec3(.8,.18,.65)*wave*uOnset*1.3;
+  // A gold shock ring travels into depth on low-frequency attacks; bass itself shapes the aperture.
+  float impact=exp(-pow((t-uKickAge*24.)*.65,2.))*exp(-uKickAge*2.);
+  col+=vec3(1.,.52,.08)*impact*uKick*2.6;
   if(mode>6.5){
-   vec2 face=rot(.055*sin(uTime*.15+uPattern*.12))*p.xy;
+   vec2 face=rot(.055*sin(uTime*.15+uPattern*.12))*p.xy/(1.+uBass*.12);
    float eye=length((vec2(abs(face.x)-.55,face.y-.35))/vec2(.29,.14));
    float iris=exp(-eye*eye*3.);float pupil=exp(-eye*eye*24.);
    float jewel=exp(-length((face-vec2(0.,1.05))*vec2(12.,7.)));
